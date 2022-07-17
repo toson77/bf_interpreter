@@ -15,6 +15,15 @@ fn main() {
         if i >= chars_vec.len() {
             break;
         }
+        if skipcount >= 1 {
+            match chars_vec[i] {
+                '[' => skipcount += 1,
+                ']' => skipcount -= 1,
+                _ => {}
+            }
+            i += 1;
+            continue;
+        }
         match chars_vec[i] {
             '>' => pointer += 1,
             '<' => pointer -= 1,
@@ -26,8 +35,12 @@ fn main() {
             },
             ',' => todo!(),
             '[' => {
-                l_mem[l_pointer] = i;
-                l_pointer += 1;
+                if mem[pointer] == 0 {
+                    skipcount += 1;
+                } else {
+                    l_mem[l_pointer] = i;
+                    l_pointer += 1;
+                }
             }
             ']' => {
                 if mem[pointer] == 0 {
