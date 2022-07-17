@@ -1,5 +1,5 @@
 use std::char;
-pub fn interpreter(chars_vec: Vec<char>) -> String {
+pub fn interpreter(chars_vec: &Vec<char>) -> String {
     let mut result = String::new();
     let mut mem: [usize; 500] = [0; 500];
     let mut pointer: usize = 0;
@@ -53,4 +53,22 @@ pub fn interpreter(chars_vec: Vec<char>) -> String {
     }
     println!("{:?}", mem);
     result
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::interpreter;
+    #[test]
+    fn test1() {
+        let words = "+++++[>++++++++++<-]>.".to_string();
+        let words: Vec<char> = words.chars().collect();
+        assert_eq!("2", interpreter(&words));
+    }
+    #[test]
+    fn helloworld() {
+        let words = "+++++++++[>++++++++>+++++++++++>+++>+<<<<-]>.>++.+++++++..+++.>+++++.<<+++++++++++++++.>.+++.------.--------.>+."
+            .to_string();
+        let words: Vec<char> = words.chars().collect();
+        assert_eq!("Hello World!", interpreter(&words));
+    }
 }
